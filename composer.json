@@ -1,0 +1,27 @@
+{
+    "name": "surest/simple-log",
+    "description": "这是一个简单日志输出包，可支简单支持配置日志信息等等",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "surest",
+            "email": "chenf@surest.cn"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Surest\\SimpleLog\\": "src/"
+        },
+        "files": [
+            "helper.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "require": {},
+    "extra": {
+        "hyperf": {
+            "config": "Surest\\SimpleLog\\ConfigProvider"
+        }
+    }
+}
