@@ -34,7 +34,7 @@ class RequestLogger
         $this->path       = $config['path'];
         $this->maxFiles   = $config['request']['maxFiles'];
         $this->moduleName = $config['moduleName'];
-        $this->mlogger    = Logging::getMLogger(Constants::T_REQUEST, 0, $this->maxFiles);
+        $this->mlogger    = (new Logging())->getMLogger(Constants::T_REQUEST, 0, $this->maxFiles);
         $this->config = $config;
     }
 

@@ -198,7 +198,7 @@ if (!function_exists('requestLogger')) {
      */
     function requestLogger()
     {
-        return Logging::getRequestLogger();
+        return (new Logging())->getRequestLogger();
     }
 }
 

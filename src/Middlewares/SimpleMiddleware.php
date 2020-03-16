@@ -45,7 +45,7 @@ class SimpleMiddleware implements MiddlewareInterface
     {
         // 记录接口日志
         config('zlog.request_on') === "enable" &&
-        Logging::getRequestLogger()->zreport($this->request, $this->response);
+        (new Logging())->getRequestLogger()->zreport($this->request, $this->response);
 
         return $handler->handle($request);
     }

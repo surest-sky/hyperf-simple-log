@@ -23,7 +23,7 @@ use Surest\SimpleLog\Logger\RequestLogger;
 
 class Logging
 {
-    private function getRequestLogger()
+    public function getRequestLogger()
     {
         $logger = new RequestLogger(getZlogConfig());
         return $logger;
@@ -42,7 +42,7 @@ class Logging
      * @return MLogger
      * @throws InvalidArgumentException
      */
-    private function getMLogger($filename, $dirname, $maxFiles = 3, $filenameFormat = '{filename}_{date}', $level = Mlogger::INFO, $dataFormat = 'Y-m-d')
+    public function getMLogger($filename, $dirname, $maxFiles = 3, $filenameFormat = '{filename}_{date}', $level = Mlogger::INFO, $dataFormat = 'Y-m-d')
     {
         if ((!is_string($filename)) || (strlen($filename) <= 0)) {
             throw new InvalidArgumentException('\$filename cannot be empty');
@@ -75,7 +75,7 @@ class Logging
      * @return ZLogger
      * @throws InvalidArgumentException
      */
-    private function getZLogger($name = 'default') :Logger
+    public function getZLogger($name = 'default') :Logger
     {
         $config = ApplicationContext::getContainer()->get(ConfigInterface::class);
         $zlog = $config->get('zlog');
@@ -86,19 +86,6 @@ class Logging
             Arr::get($zlog, 'log.maxFiles')
         );
         return $logger;
-    }
-
-    /**
-     * 静态调用
-     * User: surest
-     * Date: 2020/3/16
-     * @param string $method
-     * @param array $argument
-     * @return mixed
-     */
-    public static function __callStatic(string $method, array $argument)
-    {
-        return (new static())->$method(...$argument);
     }
 }
 
