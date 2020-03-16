@@ -23,19 +23,8 @@ use Surest\SimpleLog\Logger\RequestLogger;
 
 class Logging
 {
-    public function __construct()
+    private function getRequestLogger()
     {
-        self::globalHelpers();
-    }
-
-    public static function globalHelpers()
-    {
-        require_once __DIR__.'/helper.php';
-    }
-
-    public static function getRequestLogger()
-    {
-        self::globalHelpers();
         $logger = new RequestLogger(getZlogConfig());
         return $logger;
     }
@@ -53,7 +42,7 @@ class Logging
      * @return MLogger
      * @throws InvalidArgumentException
      */
-    public static function getMLogger($filename, $dirname, $maxFiles = 3, $filenameFormat = '{filename}_{date}', $level = Mlogger::INFO, $dataFormat = 'Y-m-d')
+    private function getMLogger($filename, $dirname, $maxFiles = 3, $filenameFormat = '{filename}_{date}', $level = Mlogger::INFO, $dataFormat = 'Y-m-d')
     {
         if ((!is_string($filename)) || (strlen($filename) <= 0)) {
             throw new InvalidArgumentException('\$filename cannot be empty');
@@ -86,18 +75,30 @@ class Logging
      * @return ZLogger
      * @throws InvalidArgumentException
      */
-    public static function getZLogger($name = 'default') :Logger
+    private function getZLogger($name = 'default') :Logger
     {
-        self::globalHelpers();
         $config = ApplicationContext::getContainer()->get(ConfigInterface::class);
         $zlog = $config->get('zlog');
-        $logger = self::getMlogger($name,
+        $logger = $this->getMlogger($name,
             null,
             Arr::get($zlog, 'log.maxFiles'),
             "biz-{filename}_{date}",
             Arr::get($zlog, 'log.maxFiles')
         );
         return $logger;
+    }
+
+    /**
+     * 静态调用
+     * User: surest
+     * Date: 2020/3/16
+     * @param string $method
+     * @param array $argument
+     * @return mixed
+     */
+    public static function __callStatic(string $method, array $argument)
+    {
+        return (new static())->$method(...$argument);
     }
 }
 
