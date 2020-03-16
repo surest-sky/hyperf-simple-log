@@ -231,3 +231,10 @@ if (!function_exists('zlogPath')) {
         return getZlogConfig('path');
     }
 }
+
+if (!function_exists('loggerReport')) {
+    function loggerReport(\Throwable $throwable)
+    {
+        return (new Logging())->exectionReport($throwable);
+    }
+}

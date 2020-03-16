@@ -87,6 +87,24 @@ class Logging
         );
         return $logger;
     }
+
+    /**
+     * 日志输出
+     * User: surest
+     * Date: 2020/3/16
+     * @param $messages
+     */
+    public function exectionReport(\Throwable $throwable)
+    {
+        $messages = [
+            'message' => $throwable->getMessage(),
+            'line' => $throwable->getLine(),
+            'file' => $throwable->getFile(),
+            'trace' => $throwable->getTraceAsString(),
+        ];
+        $logger = $this->getZLogger('exection');
+        $logger->error('error exection', $messages);
+    }
 }
 
 
