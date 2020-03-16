@@ -14,7 +14,7 @@
             "Surest\\SimpleLog\\": "src/"
         },
         "files": [
-            "helper.php"
+            "src\helper.php"
         ]
     },
     "minimum-stability": "dev",
